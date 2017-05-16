@@ -23,6 +23,8 @@ vector<Node *> instance_set;
 bool instance_pool[INSTANCE_NUM];
 pthread_mutex_t mutex0 = PTHREAD_MUTEX_INITIALIZER;
 
+vector<int> search_steps;
+
 Node* create_node(uint64_t node_id, uint64_t min, uint64_t max)
 {
     
@@ -66,16 +68,19 @@ init_scheduling_tree(uint64_t instance_id, uint64_t slice_id)
 Node* search_instance(uint64_t slice_id)
 {
     Node* node = g_node_root;
+    int steps = 0;
 
     if(!node)
     {
         init_scheduling_tree(0, slice_id);
         g_node_root->count++;
+        search_steps.push_back(1);
         return g_node_root;
     }
 
     while(node->type == TYPE_SLICE_NODE)
     {
+        steps++;
         if(slice_id < node->node_id)
         {
             node = node->left;
@@ -87,6 +92,7 @@ Node* search_instance(uint64_t slice_id)
         //return NULL;
     }
 
+    search_steps.push_back(steps);
     node->count++;
     if(slice_id < node->min)
     {
@@ -394,7 +400,7 @@ int main()
         
         if(instance)
         {
-            printf("Slice= %llu, Instance id = %llu, count = %d, min = %llu, max = %llu\n",slice_id, instance->node_id, instance->count,instance->min,instance->max);
+            printf("Slice= %llu, Instance id = %llu, count = %d, min = %llu, max = %llu, steps = %d\n",slice_id, instance->node_id, instance->count,instance->min,instance->max, search_steps[i]);
         printf("instance number = %lu\n", instance_set.size());
         }
     }
