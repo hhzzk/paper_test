@@ -328,6 +328,9 @@ void* monitor_scheduling_tree(void*)
                             break;
                         }
                     }
+                    // no instance
+                    if(j == INSTANCE_NUM)
+                        continue;
                     printf("expand %llu\n", new_instance);
                     expand_node(instance, new_instance);    
                 }

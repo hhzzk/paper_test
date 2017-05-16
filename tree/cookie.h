@@ -18,7 +18,7 @@ using namespace std;
 #define TYPE_INSTANCE_NODE 0
 #define TYPE_SLICE_NODE    1
 
-#define INSTANCE_NUM 1024
+#define INSTANCE_NUM 100
 
 typedef struct Node 
 {
