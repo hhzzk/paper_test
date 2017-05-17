@@ -9,3 +9,7 @@
 using namespace std;
 
 #define INSTANCE_NUM 20
+#define SLICE_TABLE_NUM 2000
+
+#define EXPAND_THRESHOLD 5
+#define SHRINK_THRESHOLD 2
